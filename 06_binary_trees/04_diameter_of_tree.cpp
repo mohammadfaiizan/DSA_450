@@ -137,3 +137,31 @@ int diameter(Node* root)
     }
     return mx;
 }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------//
+class Solution {
+  public:
+    // Function to return the diameter of a Binary Tree.
+    struct Info{
+        int h;
+        int d;
+    };
+    
+    Info CalculateD(Node* root){
+        if(root == NULL) return {0,0};
+        Info leftInfo = CalculateD(root->left);
+        Info rightInfo = CalculateD(root->right);
+        
+        int height = max(leftInfo.h, rightInfo.h) + 1;
+        int diameter = max(leftInfo.h + rightInfo.h + 1, max(leftInfo.d, rightInfo.d));
+        return {height, diameter};
+        
+    }
+    
+    int diameter(Node* root) {
+        // Your code here
+        Info Result = CalculateD(root);
+        return Result.d;
+    }
+};
